@@ -1,1 +1,5 @@
-json.extract! @nomination, :id, :institution_id, :name, :reason, :nominator, :nominator_email, :verified, :votes, :created_at, :updated_at
+json.extract! @nomination, :id, :institution_id, :name, :reason, :nominator
+json.institution do 
+  json.abbreviation @nomination.institution.abbreviation
+  json.name @nomination.institution.name
+end
