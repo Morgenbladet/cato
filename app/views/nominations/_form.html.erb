@@ -1,0 +1,37 @@
+<%= form_for(@nomination) do |f| %>
+  <% if @nomination.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@nomination.errors.count, "error") %> prohibited this nomination from being saved:</h2>
+
+      <ul>
+      <% @nomination.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :institution_id %><br>
+    <%= f.select :institution_id, Institution.ordered.pluck(:name, :id) %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :reason %><br>
+    <%= f.text_area :reason %>
+  </div>
+  <div class="field">
+    <%= f.label :nominator %><br>
+    <%= f.text_field :nominator %>
+  </div>
+  <div class="field">
+    <%= f.label :nominator_email %><br>
+    <%= f.text_field :nominator_email %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
