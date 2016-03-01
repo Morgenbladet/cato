@@ -1,10 +1,11 @@
 class InstitutionsController < ApplicationController
   before_action :set_institution, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource
 
   # GET /institutions
   # GET /institutions.json
   def index
-    @institutions = Institution.order(priority: :desc, name: :asc)
+    @institutions = @institutions.ordered
   end
 
   # GET /institutions/1

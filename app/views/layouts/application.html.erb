@@ -8,6 +8,15 @@
 </head>
 <body>
 
+  <p style="text-align: right">
+  <% if current_user %>
+    Logget inn som <%= current_user.email %>.
+    <%= link_to "Logg ut", destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to "Logg inn", new_user_session_path %>
+  <% end %>
+  </p>
+
 <%= yield %>
 
 </body>

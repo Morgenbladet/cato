@@ -1,16 +1,16 @@
 class NominationsController < ApplicationController
   before_action :set_nomination, only: [:show, :edit, :update, :destroy]
+  load_and_authorize_resource # also loads @nomination[s]
 
   # GET /nominations
   # GET /nominations.json
   # GET /nominations[.json]?institution=1
   def index
     if params["institution"]
-      institution = Institution.find(params["institution"])
-      @nominations = institution.nominations.order :name
-    else
-      @nominations = Nomination.order :name
+      @nominations = @nominations.where(institution_id: params["institution"])
     end
+    
+    @nominations = @nominations.ordered
   end
 
   # GET /nominations/1

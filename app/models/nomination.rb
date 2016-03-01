@@ -10,4 +10,6 @@ class Nomination < ActiveRecord::Base
   # that something with an at sign is entered
   validates :nominator_email, presence: true,
     format: { with: /@/, message: 'må være en gyldig e-postadresse' }
+
+  scope :ordered, -> { order(name: :asc) }
 end
