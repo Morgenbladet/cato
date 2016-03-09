@@ -57,3 +57,5 @@ gem 'devise'
 
 # Authorization
 gem 'cancancan', '~> 1.10'
+
+gem 'rack-cors'

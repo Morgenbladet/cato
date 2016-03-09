@@ -31,5 +31,16 @@ module ProjectCato
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.middleware.insert_before ActionDispatch::Static, "Rack::Cors", debug: true do
+
+      allow do
+        origins 'localhost', 'localhost:3000', 'www.morgenbladet.no', 'morgenbladet.no'
+
+        resource '/nominations', headers: :any, methods: %i(post), max_age: 0
+        resource '*', headers: :any, methods: %i(get options head), max_age: 0
+      end
+
+    end
   end
 end
