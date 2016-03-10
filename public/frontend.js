@@ -17,7 +17,7 @@ jQuery(function($) {
 
   var institutions_index = function () {
     clear_and_spinner();
-
+    window.location.hash = "institutions";
     $.get(HOSTNAME + "/institutions.json")
       .done(function(data) {
         $.each(data, function(index, element) {
@@ -60,6 +60,7 @@ jQuery(function($) {
 
   var institution_show = function(id) {
     clear_and_spinner();
+    window.location.hash = "institution=" + id;
     var back_link = $("<a href='#institutions'>« Alle institusjoner</a>");
     back_link.click(institutions_index);
     root_div.append(back_link);
@@ -116,6 +117,7 @@ jQuery(function($) {
       $.post(HOSTNAME + '/nominations.json', $("#submission").serialize())
         .done(function(data) {
           alert('Din nominasjon er mottatt. Den blir behandlet manuelt før den vises på denne siden.');
+          institutions_index();
         })
         .fail(function(data) {
           alert('Noe gikk galt med denne nominasjonen. Forsøk gjerne igjen.\n\n' + data.responseText);
@@ -126,5 +128,10 @@ jQuery(function($) {
     return(form);
   };
 
+  if (/institution=\d+/.test(window.location.hash)) {
+    institution.show(window.location.hash.match(/institution=(\d+)$/));
+  } else {
+    institutions_index();
+  }
   institutions_index();
 });
