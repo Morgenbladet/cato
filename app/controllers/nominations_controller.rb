@@ -32,6 +32,7 @@ class NominationsController < ApplicationController
   # POST /nominations.json
   def create
     @nomination = Nomination.new(nomination_params)
+    @nomination.verified = false
 
     respond_to do |format|
       if @nomination.save
@@ -76,6 +77,6 @@ class NominationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def nomination_params
-      params.require(:nomination).permit(:institution_id, :name, :reason, :nominator, :nominator_email)
+      params.require(:nomination).permit(:institution_id, :name, :reason, :nominator, :nominator_email, :verified)
     end
 end

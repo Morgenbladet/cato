@@ -1,4 +1,5 @@
 json.extract! @nomination, :id, :institution_id, :name, :reason, :nominator
+json.reason_html simple_format(@nomination.reason)
 json.institution do 
   json.abbreviation @nomination.institution.abbreviation
   json.name @nomination.institution.name
