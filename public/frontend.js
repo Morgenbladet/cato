@@ -23,7 +23,7 @@ jQuery(function($) {
   const HOSTNAME = 'https://cato.herokuapp.com';
 
   var root_div = $("#cato_root");
-  var spinner = $("<img src='img/ripple.svg' id='spinner' style:'display:none'/>");
+  var spinner = $("<img src='//cato.herokuapp.com/img/ripple.svg' id='spinner' style:'display:none'/>");
   root_div.prepend(spinner);
 
   var clear_and_spinner = function() {
@@ -122,10 +122,13 @@ jQuery(function($) {
 
   }
 
-  var input_div = function(field, description) {
+  var input_div = function(field, description, type) {
+    if (type == 'undefined')
+      type = 'text';
     var div = $("<div class='input_field'></div>");
-    div.append($("<span class='field_text'>" + description + "</span><br/>"));
-    div.append($("<input name='nomination[" + field + "]'/>"));
+    var fld_name = "nomination["+field +"]";
+    div.append($("<label for='" + fld_name + "'>" + description + "</label><br/>"));
+    div.append($("<input name='" + fld_name + "' type='" + type + "'/>"));
     return(div);
   };
 
@@ -134,9 +137,9 @@ jQuery(function($) {
     form.append($("<input name='nomination[institution_id]' type='hidden' value='" + institution_id + "'/>"));
     form.append(input_div("name", "Navn på den nominerte:"));
     form.append(input_div("nominator", "Ditt navn:"));
-    form.append(input_div("nominator_email", "Din e-post:"));
+    form.append(input_div("nominator_email", "Din e-post:", 'email'));
     var ta = $("<div class='input_field'></div>");
-    ta.append($("<span class='field_text'>Begrunnelse:</span><br/>"));
+    ta.append($("<label for='nomination[reason]'>Begrunnelse:</label><br/>"));
     ta.append($("<textarea name='nomination[reason]' cols='30' rows='10'></textarea>"));
     form.append(ta);
     form.append($("<button type='submit'>Send nominasjon!</button>"));
