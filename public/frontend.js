@@ -72,15 +72,26 @@ jQuery(function($) {
     return(anchor);
   };
 
+  var social_icons = function(data) {
+    var div = $("<div class='social-icons'></div>");
+    var ul = $("<ul>");
+    var fb = $("<li class='fb'></li>");
+    var tw = $("<li class='tw'></li>");
+    fb.append('<a href="https://www.facebook.com/share.php?u=https://morgenbladet.no/fantastiskeformidlere#institution=' + data.institution_id + '" onclick="return mb15_fb_click(this)" target="_blank" title="Del på facebook" class="icon"></a>');
+    ul.append(fb);
+    ul.append(tw);
+    var string = encodeURIComponent("Nominert til fantastiske formidlere: " + data.name);
+    var url = encodeURIComponent("https://morgenbladet.no/fantastiskeformidlere#institution=" + data.institution_id);
+    tw.append('<a href="https://twitter.com/intent/tweet?text=' + string + '&amp;url=' + url + '&amp;via=Morgenbladet" onclick="return mb15_tw_click(this)" target="_blank" title="Del på Twitter" class="icon"></a>');
+    div.append(ul);
+    return(div);
+  };
+
   var nomination_li = function(data) {
     var element = $("<li class='nomination'></li>");
     element.append("<h3>" + data.name + "</h3>");
     element.append("<div class='reason'><b>Begrunnelse:</b> " + data.reason_html + "</div>");
-    var sharebutton = $("<button class='share'>Del på Facebook</button>");
-    sharebutton.click(function() {
-      FB.ui({ method: 'share', href: 'https://morgenbladet.no/fantastiskeformidlere#institution=' + data.institution.id });
-    });
-    element.append(sharebutton);
+    element.append(social_icons(data));
     element.append("<p><i>Nominert av " + data.nominator + "</i></p>");
     return(element);
   };
