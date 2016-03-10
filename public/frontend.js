@@ -1,3 +1,23 @@
+jQuery.scrollTo = function (target, offset, speed, container) {
+  if (isNaN(target)) {
+    if (!(target instanceof jQuery))
+      target = $(target);
+
+    target = parseInt(target.offset().top);
+  }
+
+  container = container || "html, body";
+  if (!(container instanceof jQuery))
+    container = $(container);
+
+  speed = speed || 500
+  offset = offset || 0;
+
+  container.animate({
+    scrollTop: target + offset
+  }, speed);
+};
+
 jQuery(function($) {
   //const HOSTNAME = 'http://localhost:3000';
   const HOSTNAME = 'https://cato.herokuapp.com';
@@ -25,6 +45,7 @@ jQuery(function($) {
           root_div.append(box);
           box.hide();
           box.delay(index * 100).fadeIn(200);
+          $.scrollTo(root_div);
         });
       })
       .fail(function() {
@@ -55,7 +76,7 @@ jQuery(function($) {
     var element = $("<li class='nomination'></li>");
     element.append("<h3>" + data.name + "</h3>");
     element.append("<div class='reason'><b>Begrunnelse:</b> " + data.reason_html + "</div>");
-    var sharebutton = $("<button>Del nominasjonen</button>");
+    var sharebutton = $("<button class='share'>Del på Facebook</button>");
     sharebutton.click(function() {
       FB.ui({ method: 'share', href: 'https://morgenbladet.no/fantastiskeformidlere#institution=' + data.institution.id });
     });
@@ -96,6 +117,7 @@ jQuery(function($) {
         root_div.append("<h2>Nominér din favoritt</h2>");
         root_div.append(submission_form(id));
         window.location.hash = "institution=" + id;
+        $.scrollTo(root_div);
       });
 
   }
