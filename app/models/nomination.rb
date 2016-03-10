@@ -12,4 +12,18 @@ class Nomination < ActiveRecord::Base
     format: { with: /@/, message: 'må være en gyldig e-postadresse' }
 
   scope :ordered, -> { order(name: :asc) }
+
+  around_update :send_mail
+
+  private
+
+  def send_mail
+    verified_changed = self.verified_changed?
+
+    yield
+
+    if verified && verified_changed
+      NominationMailer.nomination_verified(self).deliver_now
+    end
+  end
 end
