@@ -91,8 +91,8 @@ jQuery(function($) {
     var element = $("<li class='nomination'></li>");
     element.append("<h3>" + data.name + "</h3>");
     element.append("<div class='reason'><b>Begrunnelse:</b> " + data.reason_html + "</div>");
-    element.append(social_icons(data));
     element.append("<p><i>Nominert av " + data.nominator + "</i></p>");
+    element.append(social_icons(data));
     return(element);
   };
 
