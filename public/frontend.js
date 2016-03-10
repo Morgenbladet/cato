@@ -1,6 +1,6 @@
 jQuery(function($) {
-  //const HOSTNAME = 'http://localhost:3000';
-  const HOSTNAME = 'https://cato.herokuapp.com';
+  const HOSTNAME = 'http://localhost:3000';
+  //const HOSTNAME = 'https://cato.herokuapp.com';
 
   var root_div = $("#cato_root");
   var spinner = $("<img src='img/ripple.svg' id='spinner' style:'display:none'/>");
@@ -54,14 +54,14 @@ jQuery(function($) {
   var nomination_li = function(data) {
     var element = $("<li class='nomination'></li>");
     element.append("<h3>" + data.name + "</h3>");
-    element.append("<div class='reason'>«" + data.reason + "»</div>");
+    element.append("<div class='reason'><b>Begrunnelse:</b> " + data.reason_html + "</div>");
+    element.append("<p><i>Nominert av " + data.nominator + "</i></p>");
     return(element);
   };
 
   var institution_show = function(id) {
     clear_and_spinner();
-    window.location.hash = "institution=" + id;
-    var back_link = $("<a href='#institutions'>« Alle institusjoner</a>");
+    var back_link = $("<a href='#institutions'>« Andre institusjoner</a>");
     back_link.click(institutions_index);
     root_div.append(back_link);
 
@@ -88,7 +88,9 @@ jQuery(function($) {
       .always(function() {
         hide_spinner();
         var form = submission_form(id);
+        root_div.append("<h2>Nominér din favoritt</h2>");
         root_div.append(submission_form(id));
+        window.location.hash = "institution=" + id;
       });
 
   }
@@ -132,5 +134,4 @@ jQuery(function($) {
   } else {
     institutions_index();
   }
-  institutions_index();
 });
