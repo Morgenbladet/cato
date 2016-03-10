@@ -45,7 +45,6 @@ jQuery(function($) {
           root_div.append(box);
           box.hide();
           box.delay(index * 100).fadeIn(200);
-          $.scrollTo(root_div);
         });
       })
       .fail(function() {
@@ -53,6 +52,7 @@ jQuery(function($) {
       })
       .always(function() {
         hide_spinner();
+        $.scrollTo(root_div);
       });
   }
 
