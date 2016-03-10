@@ -42,8 +42,7 @@ module ProjectCato
       end
 
     end
+    config.action_mailer.delivery_method = :postmark
+    config.action_mailer.postmark_settings = { :api_token => "ffa0113f-75fb-40d2-9afe-6483adbf2ea4" }
   end
-
-  config.action_mailer.delivery_method = :postmark
-  config.action_mailer.postmark_settings = { :api_token => "ffa0113f-75fb-40d2-9afe-6483adbf2ea4" }
 end
