@@ -145,6 +145,7 @@ jQuery(function($) {
 
   var submission_form = function(institution_id) {
     var form = $("<form id='submission'></form>");
+    form.append("<p>Studenter, tidligere studenter, kolleger, tilfeldige publikummere – alle kan nominere. På nettsiden kan du også lese andres nominasjoner, stemme frem kandidater og dele nominasjonene videre.</p><p>Nominasjonene og stemmene danner grunnlaget for juryens videre utvelgelse, og begrunnelsen er derfor viktig. Prøv å gi en presis beskrivelse av undervisningen på maksimalt 2000 tegn. Frist for å nominere er 15. april. Juryens liste med ti navn presenteres i august.</p>");
     form.append($("<input name='nomination[institution_id]' type='hidden' value='" + institution_id + "'/>"));
     form.append(input_div("name", "Navn på den nominerte:"));
     form.append(input_div("nominator", "Ditt navn:"));
