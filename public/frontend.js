@@ -52,7 +52,7 @@ jQuery(function($) {
       })
       .always(function() {
         hide_spinner();
-        $.scrollTo(root_div);
+        $.scrollTo(root_div, -50);
       });
   }
 
@@ -128,7 +128,7 @@ jQuery(function($) {
         root_div.append("<h2>Nominér din favoritt</h2>");
         root_div.append(submission_form(id));
         window.location.hash = "institution=" + id;
-        $.scrollTo(root_div);
+        $.scrollTo(root_div, -50);
       });
 
   }
