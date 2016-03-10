@@ -89,7 +89,6 @@ jQuery(function($) {
         hide_spinner();
         var form = submission_form(id);
         root_div.append(submission_form(id));
-        grecaptcha.render($(".g-recaptcha")[0]);
       });
 
   }
@@ -129,7 +128,7 @@ jQuery(function($) {
   };
 
   if (/institution=\d+/.test(window.location.hash)) {
-    institution.show(window.location.hash.match(/institution=(\d+)$/));
+    institution.show(window.location.hash.match(/institution=(\d+)$/)[1]);
   } else {
     institutions_index();
   }
