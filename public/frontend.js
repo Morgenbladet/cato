@@ -1,14 +1,14 @@
 jQuery.scrollTo = function (target, offset, speed, container) {
   if (isNaN(target)) {
     if (!(target instanceof jQuery))
-      target = $(target);
+      target = jQuery(target);
 
     target = parseInt(target.offset().top);
   }
 
   container = container || "html, body";
   if (!(container instanceof jQuery))
-    container = $(container);
+    container = jQuery(container);
 
   speed = speed || 500
   offset = offset || 0;
