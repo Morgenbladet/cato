@@ -61,3 +61,5 @@ gem 'cancancan', '~> 1.10'
 gem 'rack-cors'
 
 gem 'rails_12factor'
+
+gem 'postmark-rails'
