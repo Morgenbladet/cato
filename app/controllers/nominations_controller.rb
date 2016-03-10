@@ -40,7 +40,7 @@ class NominationsController < ApplicationController
         format.json { render :show, status: :created, location: @nomination }
       else
         format.html { render :new }
-        format.json { render json: @nomination.errors, status: :unprocessable_entity }
+        format.json { render json: @nomination.full_messages.join(";"), status: :unprocessable_entity }
       end
     end
   end
