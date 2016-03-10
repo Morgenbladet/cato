@@ -128,7 +128,7 @@ jQuery(function($) {
   };
 
   if (/institution=\d+/.test(window.location.hash)) {
-    institution.show(window.location.hash.match(/institution=(\d+)$/)[1]);
+    institution_show(window.location.hash.match(/institution=(\d+)$/)[1]);
   } else {
     institutions_index();
   }
