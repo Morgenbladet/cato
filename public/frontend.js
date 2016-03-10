@@ -1,6 +1,6 @@
 jQuery(function($) {
-  const HOSTNAME = 'http://localhost:3000';
-  //const HOSTNAME = 'https://cato.herokuapp.com';
+  //const HOSTNAME = 'http://localhost:3000';
+  const HOSTNAME = 'https://cato.herokuapp.com';
 
   var root_div = $("#cato_root");
   var spinner = $("<img src='img/ripple.svg' id='spinner' style:'display:none'/>");
