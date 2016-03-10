@@ -55,6 +55,11 @@ jQuery(function($) {
     var element = $("<li class='nomination'></li>");
     element.append("<h3>" + data.name + "</h3>");
     element.append("<div class='reason'><b>Begrunnelse:</b> " + data.reason_html + "</div>");
+    var sharebutton = $("<button>Del nominasjonen</button>");
+    sharebutton.click(function() {
+      FB.ui({ method: 'share', href: 'https://morgenbladet.no/fantastiskeformidlere#institution=' + data.institution.id });
+    });
+    element.append(sharebutton);
     element.append("<p><i>Nominert av " + data.nominator + "</i></p>");
     return(element);
   };
