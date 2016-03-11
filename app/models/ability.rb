@@ -9,6 +9,7 @@ class Ability
 
     # And read verified (published) nominations
     can :read, Nomination, verified: true
+    can :vote, Nomination, verified: true
 
     # And read institutions
     can :read, Institution

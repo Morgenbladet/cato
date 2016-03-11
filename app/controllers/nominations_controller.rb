@@ -59,6 +59,28 @@ class NominationsController < ApplicationController
     end
   end
 
+  # POST /nominations/1/vote.json
+  def vote
+    session[:voted_for] ||= []
+    respond_to do |format|
+      if session[:voted_for].include?(@nomination.id)
+        format.json { render json: "Du har allerede stemt for denne", status: :unprocessable_entity }
+        format.html { redirect_to nominations_url, notice: "Du har allerede stemt for denne" }
+      else
+        @nomination.increment(:votes)
+        if @nomination.save
+          session[:voted_for] << @nomination.id
+          format.json { render :show, status: :ok, location: @nomination }
+          format.html { redirect_to nominations_url, notice: "Stemmen er lagret" }
+        else
+          format.json { render json: "Kunne ikke lagre stemmen", status: :unprocessable_entity }
+          format.html { redirect_to nominations_url, notice: "Kunne ikke lagre stemmen" }
+        end
+      end
+    end
+  end
+
+
   # DELETE /nominations/1
   # DELETE /nominations/1.json
   def destroy
