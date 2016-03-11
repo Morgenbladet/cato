@@ -40,6 +40,7 @@ jQuery(function($) {
     window.location.hash = "institutions";
     $.get(HOSTNAME + "/institutions.json")
       .done(function(data) {
+        root_div.append("<p>Klikk på ditt universitet/høyskole for å lese nominasjoner eller bidra med din egen.</p>");
         $.each(data, function(index, element) {
           var box = institution_box(element);
           root_div.append(box);
