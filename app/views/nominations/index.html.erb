@@ -19,8 +19,18 @@
         <tr>
           <td><%= nomination.institution.abbreviation %></td>
           <td><%= nomination.name %></td>
-          <td><%= truncate nomination.reason %></td>
-          <td><%= nomination.verified ? "✔" : "–" %></td>
+          <td><abbr title="<%= nomination.reason %>"><%= truncate nomination.reason %></a></td>
+          <td>
+            <%= nomination.verified ? "✔" : "–" %>
+          </td>
+          <td>
+            <% unless nomination.verified? %>
+              <%= form_for nomination do |f| %>
+                <%= f.hidden_field :verified, value: true %>
+                <%= f.button 'Verify', type: 'submit' %>
+              <% end %>
+            <% end %>
+          </td>
           <td><%= link_to 'Show', nomination %></td>
           <td><%= link_to 'Edit', edit_nomination_path(nomination) %></td>
           <td><%= link_to 'Destroy', nomination, method: :delete, data: { confirm: 'Are you sure?' } %></td>
