@@ -37,7 +37,7 @@ module ProjectCato
       allow do
         origins 'localhost', 'localhost:3000', 'www.morgenbladet.no', 'morgenbladet.no'
 
-        resource '/nominations', headers: :any, methods: %i(post), max_age: 0
+        resource '/nominations', headers: :any, methods: %i(post), max_age: 0, credentials: true
         resource '*', headers: :any, methods: %i(get options head), max_age: 0
       end
 

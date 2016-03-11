@@ -1,7 +1,7 @@
 class NominationsController < ApplicationController
   before_action :set_nomination, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource # also loads @nomination[s]
-  protect_from_forgery except: :create
+  protect_from_forgery except: [:create, :vote]
 
   # GET /nominations
   # GET /nominations.json

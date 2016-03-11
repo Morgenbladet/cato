@@ -88,11 +88,28 @@ jQuery(function($) {
     return(div);
   };
 
+  var vote_button = function(id) {
+    button = $("<button class='votebutton'>✔ Støtt denne nominasjonen!</button>");
+    button.click(function(e) {
+      $.post(HOSTNAME + '/nominations/' + id + '/vote.json')
+        .done(function(data) {
+          $(e.currentTarget).prop('disabled', true);
+          alert("Din stemme er mottatt!");
+        })
+        .fail(function(data) {
+          alert("En feil oppstod: " + data.responseText);
+        });
+    });
+
+    return(button);
+  }
+
   var nomination_li = function(data) {
     var element = $("<li class='nomination'></li>");
     element.append("<h3>" + data.name + "</h3>");
     element.append("<div class='reason'><b>Begrunnelse:</b> " + data.reason_html + "</div>");
     element.append("<p><i>Nominert av " + data.nominator + "</i></p>");
+    element.append(vote_button(data.id));
     element.append(social_icons(data));
     return(element);
   };
