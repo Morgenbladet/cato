@@ -1,0 +1,18 @@
+<h1>Ny nominasjon</h2>
+
+<b>Navn:</b><br/>
+<%= @nomination.name %>
+
+<b>Institusjon:</b><br/>
+<%= @nomination.institution.name %>
+
+<b>Nominert av:</b><br/>
+<%= @nomination.nominator %>
+
+<b>Begrunnelse:</b><br/>
+<%= simple_format(@nomination.reason) %>
+
+
+<%= link_to edit_nomination_url(@nomination) do %>
+  Godkjenn eller slett nominasjonen her
+<% end %>

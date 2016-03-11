@@ -15,6 +15,8 @@ class Nomination < ActiveRecord::Base
 
   around_update :send_mail_to_nominator
 
+  after_create :notify_admins
+
   private
 
   def send_mail_to_nominator
@@ -25,5 +27,9 @@ class Nomination < ActiveRecord::Base
     if verified && verified_changed
       NominationMailer.nomination_verified(self).deliver_now
     end
+  end
+
+  def notify_admins
+    NominationMailer.notify_new(self).deliver_now
   end
 end

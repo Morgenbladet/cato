@@ -1,0 +1,13 @@
+Ny nominasjon
+=============
+
+Navn:      <%= @nomination.name %>
+Inst.:     <%= @nomination.institution.name %>
+Nominerer: <%= @nomination.nominator %>
+
+Begrunnelse:
+<%= @nomination.reason %>
+
+
+Godkjenn eller slett på:
+<%= edit_nomination_url(@nomination) %>
