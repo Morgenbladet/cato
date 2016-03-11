@@ -13,11 +13,11 @@ class Nomination < ActiveRecord::Base
 
   scope :ordered, -> { order(name: :asc) }
 
-  around_update :send_mail
+  around_update :send_mail_to_nominator
 
   private
 
-  def send_mail
+  def send_mail_to_nominator
     verified_changed = self.verified_changed?
 
     yield
