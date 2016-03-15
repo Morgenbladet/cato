@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Listing Nominations</h1>
+<h1><%= @nominations.count %> nominasjoner</h1>
 
 <table>
   <thead>
@@ -15,7 +15,7 @@
   <tbody>
     <% @nominations.each do |nomination| %>
       <% if can? :read, nomination %>
-        <tr>
+        <tr class='<%= cycle %w(odd even)%>'>
           <td><%= nomination.institution.abbreviation %></td>
           <td><%= nomination.name %></td>
           <td><abbr title="<%= nomination.reason %>"><%= truncate nomination.reason %></a></td>

@@ -11,7 +11,7 @@ class NominationsController < ApplicationController
       @nominations = @nominations.where(institution_id: params["institution"])
     end
     
-    @nominations = @nominations.ordered
+    @nominations = @nominations.order(:verified, :name)
   end
 
   # GET /nominations/1
