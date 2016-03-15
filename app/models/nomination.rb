@@ -5,6 +5,7 @@ class Nomination < ActiveRecord::Base
   validates :institution, presence: true
   validates :name, presence: true
   validates :nominator, presence: true
+  validates :year_of_birth, numericality: { only_integer: true, greater_than: 1799, less_than: 2000, allow_blank: true }
 
   # Mostly the user's problem if email is incorrect, just checking
   # that something with an at sign is entered
@@ -16,6 +17,11 @@ class Nomination < ActiveRecord::Base
   around_update :send_mail_to_nominator
 
   after_create :notify_admins
+
+  def age
+    return nil unless self.year_of_birth.is_a? Integer
+    Date.today.year - self.year_of_birth
+  end
 
   private
 

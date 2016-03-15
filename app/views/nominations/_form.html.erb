@@ -21,7 +21,7 @@
   </div>
   <div class="field">
     <%= f.label :reason %><br>
-    <%= f.text_area :reason %>
+    <%= f.text_area :reason, cols: 40, rows: 10 %>
   </div>
   <div class="field">
     <%= f.label :nominator %><br>
@@ -34,6 +34,22 @@
   <div class="field">
     <%= f.label :verified %><br>
     <%= f.check_box :verified %>
+  </div>
+  <div class="field">
+    <%= f.label :gender %>
+    <%= f.radio_button :gender, 'Male' %> Male
+    <%= f.radio_button :gender, 'Female' %> Female
+    <%= f.radio_button :gender, '' %> Not set
+  </div>
+  <div class="field">
+    <%= f.label :branch %>
+    <%= f.radio_button :branch, 'Sciences' %> Sciences
+    <%= f.radio_button :branch, 'Humanitites' %> Humanities
+    <%= f.radio_button :branch, '' %> Not set
+  </div>
+  <div class="field">
+    <%= f.label :year_of_birth %><br>
+    <%= f.number_field :year_of_birth %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -21,6 +21,20 @@
           <td><abbr title="<%= nomination.reason %>"><%= truncate nomination.reason %></a></td>
           <% if can? :edit, nomination %>
             <td><%= nomination.votes %></td>
+            <td>
+              <%=
+                [
+                case(nomination.gender)
+                when "Male" then "♂"
+                when "Female" then "♀"
+                else nil
+                end,
+                nomination.age ? "#{nomination.age} yrs." : nil,
+                nomination.branch.blank? ? nil : nomination.branch
+                ].compact.join(", ")
+              %>
+
+            </td>
           <% end %>
           <td>
             <%= nomination.verified ? "✔" : "–" %>
