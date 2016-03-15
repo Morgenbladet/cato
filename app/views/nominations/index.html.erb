@@ -8,8 +8,7 @@
       <th>Institution</th>
       <th>Name</th>
       <th>Reason</th>
-      <th>Verified</th>
-      <th colspan="4"></th>
+      <th colspan="6"></th>
     </tr>
   </thead>
 
@@ -20,6 +19,9 @@
           <td><%= nomination.institution.abbreviation %></td>
           <td><%= nomination.name %></td>
           <td><abbr title="<%= nomination.reason %>"><%= truncate nomination.reason %></a></td>
+          <% if can? :edit, nomination %>
+            <td><%= nomination.votes %></td>
+          <% end %>
           <td>
             <%= nomination.verified ? "✔" : "–" %>
           </td>
