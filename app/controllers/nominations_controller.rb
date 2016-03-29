@@ -58,6 +58,15 @@ class NominationsController < ApplicationController
       end
     end
   end
+  
+  # PATCH /nominations/verify_all
+  def verify_all
+    if Nomination.update_all(verified: true)
+      redirect_to nominations_url, notice: 'All verified'
+    else
+      redirect_to nominations_url, notice: 'Error occured. Nominations were not verified'
+    end
+  end
 
   # POST /nominations/1/vote.json
   def vote

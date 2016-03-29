@@ -2,6 +2,14 @@
 
 <h1><%= @nominations.count %> nominasjoner</h1>
 
+<% if can? :update, Nomination %>
+  <%= button_to "Verify all",
+        verify_all_nominations_path,
+        method: :post,
+        data: { confirm: "Er du sikker?" }
+  %>
+<% end %>
+
 <table>
   <thead>
     <tr>

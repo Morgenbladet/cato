@@ -13,6 +13,8 @@ class Nomination < ActiveRecord::Base
     format: { with: /@/, message: 'må være en gyldig e-postadresse' }
 
   scope :ordered, -> { order(name: :asc) }
+  scope :verified, -> { where(verified: true) }
+  scope :unverified, -> { where(verified: false) }
 
   around_update :send_mail_to_nominator
 

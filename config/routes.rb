@@ -4,6 +4,9 @@ Rails.application.routes.draw do
     member do
       post 'vote'
     end
+    collection do
+      post 'verify_all'
+    end
   end
 
   resources :institutions

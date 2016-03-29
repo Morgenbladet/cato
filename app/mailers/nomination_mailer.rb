@@ -5,7 +5,9 @@ class NominationMailer < ApplicationMailer
   end
 
   def notify_new(nomination)
-    @nomination = nomination
-    mail to: User.pluck(:email), subject: "Ny nominasjon: #{nomination.name}"
+    if User.any?
+      @nomination = nomination
+      mail to: User.pluck(:email), subject: "Ny nominasjon: #{nomination.name}"
+    end
   end
 end

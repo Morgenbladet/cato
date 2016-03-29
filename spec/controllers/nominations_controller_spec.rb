@@ -87,6 +87,24 @@ RSpec.describe NominationsController do
         expect(Nomination.find(nomination.id).name).to_not eq("Testing")
       end
     end
+
+    context "POST verify_all" do
+      let!(:nomination) { create :nomination }
+      it "has one unapproved nomination" do
+        expect(Nomination.count).to eq(1)
+        expect(Nomination.unverified.count).to eq(1)
+      end
+
+      it "does not change the verified status" do
+        post :verify_all
+        expect(nomination.reload).to_not be_verified
+      end
+
+      it "shows an error message" do
+        post :verify_all
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
   end
 
   context "logged in" do
