@@ -108,5 +108,26 @@ RSpec.describe NominationsController do
   end
 
   context "logged in" do
+    let(:user) { create :user }
+
+    before do
+      sign_in user
+    end
+
+    context "POST verify_all" do
+      let!(:nom1) { create :nomination }
+      let!(:nom2) { create :nomination }
+      let!(:nom3) { create :approved_nomination }
+
+      it "has two unverified before posting" do
+        expect(Nomination.unverified.count).to eq(2)
+      end
+
+      it "has three verified and zero unverified after posting" do
+        post :verify_all
+        expect(Nomination.verified.count).to eq(3)
+        expect(Nomination.unverified.count).to eq(0)
+      end
+    end
   end
 end
