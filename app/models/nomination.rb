@@ -25,6 +25,19 @@ class Nomination < ActiveRecord::Base
     Date.today.year - self.year_of_birth
   end
 
+  def rank
+    index = Nomination.order(votes: :desc).pluck(:votes).find_index do |v|
+      self.votes >= v
+    end
+
+    if index.nil?
+      # Database changed since record loaded, just return last place
+      Nomination.count
+    else
+      index + 1
+    end
+  end
+
   private
 
   def send_mail_to_nominator

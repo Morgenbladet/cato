@@ -10,8 +10,13 @@ class NominationsController < ApplicationController
     if params["institution"]
       @nominations = @nominations.where(institution_id: params["institution"])
     end
-    
+
     @nominations = @nominations.order(:verified, :name)
+  end
+
+  # GET /nominations/full_report
+  def full_report
+    @nominations = @nominations.verified.order(:name)
   end
 
   # GET /nominations/1

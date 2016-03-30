@@ -63,3 +63,5 @@ gem 'rack-cors'
 gem 'rails_12factor'
 
 gem 'postmark-rails'
+
+gem 'haml-rails'

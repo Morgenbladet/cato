@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     end
     collection do
       post 'verify_all'
+      get 'full_report'
     end
   end
 

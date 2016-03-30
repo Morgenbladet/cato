@@ -2,6 +2,13 @@
 
 <h1><%= @nominations.count %> nominasjoner</h1>
 
+<p>
+<% if can? :manage, Nomination %>
+  <%= link_to 'Full report', full_report_nominations_path %>
+<% end %>
+</p>
+
+<p>
 <% if can? :update, Nomination %>
   <%= button_to "Verify all",
         verify_all_nominations_path,
@@ -9,6 +16,7 @@
         data: { confirm: "Er du sikker?" }
   %>
 <% end %>
+</p>
 
 <table>
   <thead>

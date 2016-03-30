@@ -1,0 +1,11 @@
+.nomination
+  %h2= nomination.name
+  %p.institution= nomination.institution.name
+  %p.personalia= personalia(nomination)
+  %p.votes
+    == #{nomination.votes} stemmer
+    == (##{nomination.rank})
+  %p.reason
+    = simple_format(nomination.reason)
+  %p.nominator
+    = nomination.nominator

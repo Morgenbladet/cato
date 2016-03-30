@@ -1,0 +1,8 @@
+%h1==  Alle #{@nominations.count} godkjente nominasjoner
+
+<button onclick='window.print()'>Skriv ut</button>
+
+%p
+  %small= DateTime.now.strftime('%d.%m.%Y %H:%M')
+
+= render partial: 'nomination', collection: @nominations

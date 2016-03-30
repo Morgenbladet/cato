@@ -1,3 +1,28 @@
 // Place all the styles related to the Nominations controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+div.nomination {
+  font-family: 'Georgia';
+  border-top: 1px solid #005ca9;
+
+  .institution, .personalia, .votes, .reason, .nominator {
+    font-family: 'Georgia';
+  }
+
+
+  .institution, .personalia, .votes {
+    display: inline-block;
+  }
+
+  .institution {
+    width: 25em;
+  }
+  .personalia, .votes {
+    width: 10em;
+  }
+  .nominator {
+    font-style: italic;
+  }
+}
+
