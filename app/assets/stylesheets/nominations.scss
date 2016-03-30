@@ -26,3 +26,10 @@ div.nomination {
   }
 }
 
+a.sortable.desc::after {
+  content: "⮟";
+}
+
+a.sortable.asc::after {
+  content: "⮝";
+}

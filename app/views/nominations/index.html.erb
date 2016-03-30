@@ -21,9 +21,12 @@
 <table>
   <thead>
     <tr>
-      <th>Institution</th>
-      <th>Name</th>
-      <th>Reason</th>
+      <th><%= sorting_link 'Institusjon', 'institution' %></th>
+      <th><%= sorting_link 'Navn', 'name' %></th>
+      <th>Begrunnelse</th>
+      <% if can? :edit, Nomination %>
+        <th><%= sorting_link 'Stemmer', 'votes', 'desc' %></th>
+      <% end %>
       <th colspan="6"></th>
     </tr>
   </thead>
@@ -50,24 +53,24 @@
                 ].compact.join(", ")
               %>
 
+              </td>
+            <td>
+              <%= nomination.verified ? "✔" : "–" %>
             </td>
-          <% end %>
-          <td>
-            <%= nomination.verified ? "✔" : "–" %>
-          </td>
-          <td>
-            <% unless nomination.verified? %>
-              <%= form_for nomination do |f| %>
-                <%= f.hidden_field :verified, value: true %>
-                <%= f.button 'Verify', type: 'submit' %>
+            <td>
+              <% unless nomination.verified? %>
+                <%= form_for nomination do |f| %>
+                  <%= f.hidden_field :verified, value: true %>
+                  <%= f.button 'Verify', type: 'submit' %>
+                <% end %>
               <% end %>
-            <% end %>
-          </td>
-          <td><%= link_to 'Vote', vote_nomination_path(nomination), method: :post %></td>
-          <td><%= link_to 'Show', nomination if can? :show, nomination%></td>
-          <td><%= link_to 'Edit', edit_nomination_path(nomination) if can? :edit, nomination %></td>
-          <td><%= link_to 'Destroy', nomination, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, nomination %></td>
-        </tr>
+            </td>
+            <td><%= link_to 'Vote', vote_nomination_path(nomination), method: :post %></td>
+            <td><%= link_to 'Show', nomination if can? :show, nomination%></td>
+            <td><%= link_to 'Edit', edit_nomination_path(nomination) if can? :edit, nomination %></td>
+            <td><%= link_to 'Destroy', nomination, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, nomination %></td>
+          </tr>
+          <% end %>
       <% end %>
     <% end %>
   </tbody>

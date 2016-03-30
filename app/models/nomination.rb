@@ -20,6 +20,20 @@ class Nomination < ActiveRecord::Base
 
   after_create :notify_admins
 
+  scope :sorted_by, lambda {|sort_key|
+    direction = (sort_key =~ /desc$/) ? 'desc' : 'asc'
+    case sort_key.to_s
+    when /^name/
+      order(name: direction)
+    when /^institution/
+      joins(:institution).order("institutions.name #{direction}")
+    when /^votes/
+      order(votes: direction)
+    else
+      raise ArgumentError, "Invalid sort option '#{sort_key}'"
+    end
+  }
+
   def age
     return nil unless self.year_of_birth.is_a? Integer
     Date.today.year - self.year_of_birth

@@ -7,11 +7,17 @@ class NominationsController < ApplicationController
   # GET /nominations.json
   # GET /nominations[.json]?institution=1
   def index
+    if params["sort"]
+      @sort_params = params["sort"]
+      @nominations = @nominations.sorted_by(params["sort"])
+    else
+      @sort_params = "name asc"
+      @nominations = @nominations.order(name: 'asc')
+    end
+
     if params["institution"]
       @nominations = @nominations.where(institution_id: params["institution"])
     end
-
-    @nominations = @nominations.order(:verified, :name)
   end
 
   # GET /nominations/full_report
