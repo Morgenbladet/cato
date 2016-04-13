@@ -1,24 +1,17 @@
 class Nomination < ActiveRecord::Base
   belongs_to :institution
+  has_many :reasons, inverse_of: :nomination
 
-  validates :reason, length: { in: 1..2300 }
+  accepts_nested_attributes_for :reasons
+
   validates :institution, presence: true
   validates :name, presence: true
-  validates :nominator, presence: true
   validates :year_of_birth, numericality: { only_integer: true, greater_than: 1799, less_than: 2000, allow_blank: true }
 
-  # Mostly the user's problem if email is incorrect, just checking
-  # that something with an at sign is entered
-  validates :nominator_email, presence: true,
-    format: { with: /@/, message: 'må være en gyldig e-postadresse' }
+  scope :verified_reasons, -> { reasons.where(verified: true) }
 
   scope :ordered, -> { order(name: :asc) }
-  scope :verified, -> { where(verified: true) }
-  scope :unverified, -> { where(verified: false) }
-
-  around_update :send_mail_to_nominator
-
-  after_create :notify_admins
+  scope :verified, -> { joins(:reasons).where(reasons: { verified: true }).uniq }
 
   scope :sorted_by, lambda {|sort_key|
     direction = (sort_key =~ /desc$/) ? 'desc' : 'asc'
@@ -29,6 +22,8 @@ class Nomination < ActiveRecord::Base
       joins(:institution).order("institutions.name #{direction}")
     when /^votes/
       order(votes: direction)
+    when /^reasons/
+      order("reasons_count #{direction}")
     else
       raise ArgumentError, "Invalid sort option '#{sort_key}'"
     end
@@ -52,19 +47,7 @@ class Nomination < ActiveRecord::Base
     end
   end
 
-  private
-
-  def send_mail_to_nominator
-    verified_changed = self.verified_changed?
-
-    yield
-
-    if verified && verified_changed
-      NominationMailer.nomination_verified(self).deliver_now
-    end
-  end
-
-  def notify_admins
-    NominationMailer.notify_new(self).deliver_now
+  def verified?
+    reasons.where(verified: true).any?
   end
 end

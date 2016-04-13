@@ -1,13 +1,15 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700&subset=latin,latin-ext);
+
 body {
   background-color: #fff;
   color: #333;
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: 'open sans', sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
 
 p, ol, ul, td {
-  font-family: verdana, arial, helvetica, sans-serif;
+  font-family: 'open sans', sans-serif;
   font-size: 13px;
   line-height: 18px;
 }
@@ -82,4 +84,10 @@ label {
   font-weight: bold;
   display: inline-block;
   width: 10em;
+}
+blockquote {
+  border-left: 3px solid #999;
+  padding-left: 1em;
+  margin-left: 0;
+  color: #222;
 }

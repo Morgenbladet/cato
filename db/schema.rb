@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160315095906) do
+ActiveRecord::Schema.define(version: 20160413163720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,19 +27,28 @@ ActiveRecord::Schema.define(version: 20160315095906) do
   create_table "nominations", force: :cascade do |t|
     t.integer  "institution_id"
     t.string   "name"
-    t.text     "reason"
-    t.string   "nominator"
-    t.string   "nominator_email"
-    t.boolean  "verified",        default: false
-    t.integer  "votes",           default: 0
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.integer  "votes",          default: 0
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.string   "gender"
     t.integer  "year_of_birth"
     t.string   "branch"
+    t.integer  "reasons_count",  default: 0
   end
 
   add_index "nominations", ["institution_id"], name: "index_nominations_on_institution_id", using: :btree
+
+  create_table "reasons", force: :cascade do |t|
+    t.integer  "nomination_id"
+    t.string   "nominator"
+    t.text     "reason"
+    t.string   "nominator_email"
+    t.boolean  "verified",        default: false
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "reasons", ["nomination_id"], name: "index_reasons_on_nomination_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -60,4 +69,5 @@ ActiveRecord::Schema.define(version: 20160315095906) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "nominations", "institutions"
+  add_foreign_key "reasons", "nominations"
 end

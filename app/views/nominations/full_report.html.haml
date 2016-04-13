@@ -1,6 +1,10 @@
 %h1==  Alle #{@nominations.count} godkjente nominasjoner
 
+= link_to '[Tilbake]', nominations_path
+
+<p>
 <button onclick='window.print()'>Skriv ut</button>
+</p>
 
 %p
   %small= DateTime.now.strftime('%d.%m.%Y %H:%M')

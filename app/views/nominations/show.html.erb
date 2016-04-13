@@ -1,44 +1,43 @@
 <p id="notice"><%= notice %></p>
 
+<h2><%= @nomination.name %></h2>
 <p>
-  <strong>Institution:</strong>
+<% if can? :update, @nomination %>
+  <%= link_to 'Rediger', edit_nomination_path(@nomination) %>
+<% end %>
+
+<% if can? :destroy, @nomination %>
+  <%= link_to 'Slett', @nomination, method: :delete, data: { confirm: 'Er du sikker?' } %>
+<% end %>
+</p>
+
+<p>
+  <strong>Institusjon:</strong>
   <%= @nomination.institution.name %>
 </p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Navn:</strong>
   <%= @nomination.name %>
 </p>
 
 <p>
-  <strong>Reason:</strong>
-  <%= simple_format @nomination.reason %>
-</p>
-
-<p>
-  <strong>Nominator:</strong>
-  <%= @nomination.nominator %>
+  <strong>Personalia:</strong>
+  <%= personalia(@nomination) %>
 </p>
 
 <% if can? :update, @nomination %>
   <p>
-    <strong>Nominator email:</strong>
-    <%= @nomination.nominator_email %>
-  </p>
-
-  <p>
-    <strong>Verified:</strong>
-    <%= @nomination.verified %>
-  </p>
-
-  <p>
-    <strong>Votes:</strong>
+    <strong>Stemmer:</strong>
     <%= @nomination.votes %>
+    (#<%= @nomination.rank %> av <%= Nomination.count %>)
   </p>
+<% end %>
 
-  <%= link_to 'Edit', edit_nomination_path(@nomination) %>
-<% end %>
-<% if can? :destroy, @nomination %>
-  <%= link_to 'Delete', @nomination, method: :delete, data: { confirm: 'Er du sikker?' } %>
-<% end %>
-<%= link_to 'Back', nominations_path %>
+<h2>Nominasjoner</h2>
+
+<ol>
+  <%= render partial: 'reason', collection: @nomination.reasons.accessible_by(current_ability) %>
+</ol>
+
+<%= link_to 'Tilbake', nominations_path %>

@@ -5,8 +5,8 @@ RSpec.describe NominationsController do
     it("has no current user") { expect(controller.current_user).to be_nil }
 
     context "GET index" do
-      let!(:approved) { create :approved_nomination }
-      let!(:unapproved) { create :nomination }
+      let!(:approved) { create :nomination_with_reasons, verified: true }
+      let!(:unapproved) { create :nomination_with_reasons, verified: false }
 
       before do
         get :index
@@ -22,18 +22,29 @@ RSpec.describe NominationsController do
     context "POST create" do
       context "with good data" do
         let(:institution) { create :institution }
-        let(:data) { attributes_for :nomination, institution_id: institution.id }
+        let(:data) { attributes_for(:nomination,
+                                    institution_id: institution.id,
+                                    reasons_attributes: [ attributes_for(:reason) ]) }
 
         it "creates a nominiation" do
           expect do
             post :create, nomination: data
           end.to change(Nomination, :count).by(1)
         end
+
+        it "creates a reason" do
+          expect do
+            post :create, nomination: data
+          end.to change(Reason, :count).by(1)
+        end
       end
 
       context "with verified=true" do
         let(:institution) { create :institution }
-        let(:data) { attributes_for :approved_nomination, institution_id: institution.id }
+        let(:data) { attributes_for :nomination_with_reasons,
+                     institution_id: institution.id,
+                     reasons_count: 1,
+                     verified: true }
 
         it "creates a nominiation" do
           expect do
@@ -65,8 +76,8 @@ RSpec.describe NominationsController do
     end
 
     context "PATCH update" do
-      let(:nomination) { create :approved_nomination }
-      
+      let(:nomination) { create :nomination, :approved }
+
       before do
         n = nomination
         n.name = "Testing"
@@ -92,7 +103,7 @@ RSpec.describe NominationsController do
       let!(:nomination) { create :nomination }
       it "has one unapproved nomination" do
         expect(Nomination.count).to eq(1)
-        expect(Nomination.unverified.count).to eq(1)
+        expect(Nomination.verified.count).to eq(0)
       end
 
       it "does not change the verified status" do
@@ -115,18 +126,18 @@ RSpec.describe NominationsController do
     end
 
     context "POST verify_all" do
-      let!(:nom1) { create :nomination }
-      let!(:nom2) { create :nomination }
-      let!(:nom3) { create :approved_nomination }
+      let!(:nom1) { create :nomination_with_reasons }
+      let!(:nom2) { create :nomination_with_reasons }
+      let!(:nom3) { create :nomination, :approved }
 
       it "has two unverified before posting" do
-        expect(Nomination.unverified.count).to eq(2)
+        expect(Nomination.count-Nomination.verified.count).to eq(2)
       end
 
       it "has three verified and zero unverified after posting" do
         post :verify_all
+        expect(Nomination.count).to eq(3)
         expect(Nomination.verified.count).to eq(3)
-        expect(Nomination.unverified.count).to eq(0)
       end
     end
   end

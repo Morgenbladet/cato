@@ -4,12 +4,11 @@ class Ability
   def initialize(user)
     user ||= User.new # empty user means a guest
 
-    # Users can create nominations
+    # Users can read verified (published) nominations
+    can :read, Reason, verified: true
+    can :read, Nomination, reasons: { verified: true }
+    can :vote, Nomination, reasons: { verified: true }
     can :create, Nomination
-
-    # And read verified (published) nominations
-    can :read, Nomination, verified: true
-    can :vote, Nomination, verified: true
 
     # And read institutions
     can :read, Institution

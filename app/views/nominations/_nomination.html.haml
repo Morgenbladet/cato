@@ -1,11 +1,11 @@
 .nomination
-  %h2= nomination.name
+  %h2
+    = nomination.name
+    %small== ID: #{nomination.id}
   %p.institution= nomination.institution.name
   %p.personalia= personalia(nomination)
   %p.votes
     == #{nomination.votes} stemmer
     == (##{nomination.rank})
-  %p.reason
-    = simple_format(nomination.reason)
-  %p.nominator
-    = nomination.nominator
+  - if nomination.reasons.any?
+    %ol= render partial: 'report_reason', collection: nomination.reasons

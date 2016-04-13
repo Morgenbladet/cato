@@ -43,7 +43,7 @@ class NominationsController < ApplicationController
   # POST /nominations.json
   def create
     @nomination = Nomination.new(nomination_params)
-    @nomination.verified = false
+    @nomination.reasons.each {|r| r.verified = false }
 
     respond_to do |format|
       if @nomination.save
@@ -72,10 +72,7 @@ class NominationsController < ApplicationController
   
   # PATCH /nominations/verify_all
   def verify_all
-    Nomination.unverified.find_each do |n|
-      n.verified = true
-      n.save!
-    end
+    Reason.update_all(verified: true)
     redirect_to nominations_url, notice: 'All verified'
   rescue
     redirect_to nominations_url, notice: 'Error occured.'
@@ -121,6 +118,9 @@ class NominationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def nomination_params
-      params.require(:nomination).permit(:institution_id, :name, :reason, :nominator, :nominator_email, :verified, :gender, :branch, :year_of_birth)
+      params.require(:nomination)
+        .permit(:institution_id, :name, :gender, :branch, :year_of_birth,
+                reasons_attributes:
+                  %i|id _destroy reason nominator nominator_email verified| )
     end
 end

@@ -23,8 +23,9 @@
     <tr>
       <th><%= sorting_link 'Institusjon', 'institution' %></th>
       <th><%= sorting_link 'Navn', 'name' %></th>
-      <th>Begrunnelse</th>
+      <th><%= sorting_link 'Nominasjoner', 'reasons' %></th>
       <% if can? :edit, Nomination %>
+        <th>Ubehandlede nom.</th>
         <th><%= sorting_link 'Stemmer', 'votes', 'desc' %></th>
       <% end %>
       <th colspan="6"></th>
@@ -36,9 +37,10 @@
       <% if can? :read, nomination %>
         <tr class='<%= cycle %w(odd even)%>'>
           <td><%= nomination.institution.abbreviation %></td>
-          <td><%= nomination.name %></td>
-          <td><abbr title="<%= nomination.reason %>"><%= truncate nomination.reason %></a></td>
+          <td><%= link_to nomination.name, nomination %></td>
+          <td><%= nomination.reasons.count %></td>
           <% if can? :edit, nomination %>
+            <td><%= nomination.reasons.unverified.count %></td>
             <td><%= nomination.votes %></td>
             <td>
               <%=
@@ -54,19 +56,7 @@
               %>
 
               </td>
-            <td>
-              <%= nomination.verified ? "✔" : "–" %>
-            </td>
-            <td>
-              <% unless nomination.verified? %>
-                <%= form_for nomination do |f| %>
-                  <%= f.hidden_field :verified, value: true %>
-                  <%= f.button 'Verify', type: 'submit' %>
-                <% end %>
-              <% end %>
-            </td>
             <td><%= link_to 'Vote', vote_nomination_path(nomination), method: :post %></td>
-            <td><%= link_to 'Show', nomination if can? :show, nomination%></td>
             <td><%= link_to 'Edit', edit_nomination_path(nomination) if can? :edit, nomination %></td>
             <td><%= link_to 'Destroy', nomination, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, nomination %></td>
           </tr>

@@ -1,0 +1,24 @@
+<li class="reason <%= reason.verified? ? 'verified' : 'unverified' %>">
+  <em>
+    <%= mail_to reason.nominator_email, reason.nominator %>
+  </em>
+    <%= l reason.created_at %>
+  <blockquote><%= simple_format(reason.reason) %></blockquote>
+
+  <% if can? :update, reason.nomination %>
+    <p>
+      <% if reason.verified? %>
+        <% verb = 'Fjern godkjenning' %>
+      <% else %>
+        Ikke godkjent
+        <% verb = 'Godkjenn' %>
+      <% end %>
+      <%= form_for(reason.nomination) do |f| %>
+        <%= f.fields_for :reasons, reason do |reason_fields| %>
+          <%= reason_fields.hidden_field :verified, value: !reason.verified %>
+        <% end %>
+        <%= f.button verb, type: :submit %>
+      <% end %>
+    </p>
+  <% end %>
+</li>

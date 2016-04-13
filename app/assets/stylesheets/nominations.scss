@@ -3,13 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 div.nomination {
-  font-family: 'Georgia';
   border-top: 1px solid #005ca9;
-
-  .institution, .personalia, .votes, .reason, .nominator {
-    font-family: 'Georgia';
-  }
-
 
   .institution, .personalia, .votes {
     display: inline-block;
@@ -24,6 +18,16 @@ div.nomination {
   .nominator {
     font-style: italic;
   }
+
+  ol {
+    list-style-type: lower-roman;
+    margin-left: 0;
+    padding-left: 2em;
+  }
+  h2 small {
+    font-size: 12px;
+    color: #777;
+  }
 }
 
 a.sortable.desc::after {
@@ -32,4 +36,13 @@ a.sortable.desc::after {
 
 a.sortable.asc::after {
   content: "⮝";
+}
+
+li.reason {
+  border-bottom: 1px solid #888;
+  padding: 2em;
+}
+
+li.reason.unverified {
+  background: #ffeeee;
 }

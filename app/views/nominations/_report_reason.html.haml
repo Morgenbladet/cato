@@ -1,0 +1,6 @@
+%li.report_reason{class: report_reason.verified? ? 'verified' : 'unverified'}
+  %em
+    = mail_to report_reason.nominator_email, report_reason.nominator
+    = l report_reason.created_at, format: :short
+
+  %blockquote= simple_format(report_reason.reason)
