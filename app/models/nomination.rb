@@ -13,6 +13,8 @@ class Nomination < ActiveRecord::Base
   scope :ordered, -> { order(name: :asc) }
   scope :verified, -> { joins(:reasons).where(reasons: { verified: true }).uniq }
 
+  scope :ten_random, -> { order('RANDOM()').limit(10) }
+
   scope :sorted_by, lambda {|sort_key|
     direction = (sort_key =~ /desc$/) ? 'desc' : 'asc'
     case sort_key.to_s
@@ -49,5 +51,22 @@ class Nomination < ActiveRecord::Base
 
   def verified?
     reasons.where(verified: true).any?
+  end
+
+  def eat!(target)
+    target.reasons.each do |r|
+      r.nomination = self
+      r.save!
+    end
+
+    self.votes += target.votes
+
+    self.gender = target.gender if gender.blank?
+    self.year_of_birth = target.year_of_birth if year_of_birth.blank?
+    self.branch = target.branch if branch.blank?
+
+    save!
+
+    target.reload.destroy
   end
 end

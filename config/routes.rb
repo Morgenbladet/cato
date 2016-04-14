@@ -6,7 +6,9 @@ Rails.application.routes.draw do
     end
     collection do
       post 'verify_all'
+      patch 'merge'
       get 'full_report'
+      get 'random'
     end
   end
 

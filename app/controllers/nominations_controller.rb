@@ -20,6 +20,14 @@ class NominationsController < ApplicationController
     end
   end
 
+  # GET /nominations/random.json
+  def random
+    @nominations = @nominations.accessible_by(current_ability).ten_random
+    respond_to do |format|
+      format.json { render :index }
+    end
+  end
+
   # GET /nominations/full_report
   def full_report
     @nominations = @nominations.verified.order(:name)
@@ -54,6 +62,19 @@ class NominationsController < ApplicationController
         format.json { render json: @nomination.errors.full_messages.join(";"), status: :unprocessable_entity }
       end
     end
+  end
+
+  # PATCH/PUT /nominations/merge
+  def merge
+    nom = Nomination.find(params["ids"])
+    keeper = nom.shift
+    nom.each do |n|
+      keeper.eat!(n)
+    end
+
+    redirect_to keeper, notice: "#{nom.count + 1} records merged into one"
+  rescue
+    redirect_to nominations_url, notice: "An error occured during merge"
   end
 
   # PATCH/PUT /nominations/1
