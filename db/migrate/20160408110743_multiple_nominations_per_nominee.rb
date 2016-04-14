@@ -11,6 +11,8 @@ class MultipleNominationsPerNominee < ActiveRecord::Migration
       t.timestamps null: false
     end
 
+    add_column :nominations, :reasons_count, :integer, default: 0
+
     Nomination.all.each do |n|
       Reason.create nomination_id: n.id,
         nominator: n.nominator,
@@ -35,6 +37,7 @@ class MultipleNominationsPerNominee < ActiveRecord::Migration
     add_column :nominations, :nominator_email, :string
     add_column :nominations, :verified, :boolean, default: false
     add_column :nominations, :reason, :text
+    remove_column :nominations, :reasons_count
 
     Reason.all do |r|
       n = r.nomination
