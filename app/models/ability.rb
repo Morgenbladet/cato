@@ -11,6 +11,7 @@ class Ability
     can :read, Reason, verified: true
     can :read, Nomination, reasons: { verified: true }
     can :vote, Nomination, reasons: { verified: true }
+    can :create, Nomination
 
     # And read institutions
     can :read, Institution
