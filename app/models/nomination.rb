@@ -1,5 +1,5 @@
 class Nomination < ActiveRecord::Base
-  belongs_to :institution
+  belongs_to :institution, counter_cache: true
   has_many :reasons, inverse_of: :nomination
 
   accepts_nested_attributes_for :reasons
