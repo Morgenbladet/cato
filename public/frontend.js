@@ -97,6 +97,7 @@ jQuery(function($) {
     });
 
     var button = $('<button/>', {
+      class: 'searchbutton',
       text: 'Søk'
     });
 
@@ -224,9 +225,9 @@ jQuery(function($) {
 
   var nomination_li = function(data) {
     var li = $("<li class='nomination'></li>");
+    li.append(social_icons(data));
     li.append("<h3>" + data.name + "</h3>");
     li.append("<small>" + data.institution.name + "</small>");
-    li.append(social_icons(data));
     $.each(data.reasons, function(index, element) {
       var div = $("<div class='reason'>");
       div.append("<blockquote>" + element.reason_html + "</blockquote>");
