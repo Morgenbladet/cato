@@ -8,3 +8,4 @@ json.reasons nomination.reasons do |reason|
   json.reason_html simple_format(reason.reason)
   json.nominator reason.nominator
 end
+json.reasons_merged merge_reasons(nomination)

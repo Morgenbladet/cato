@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+  <title>Test old voting frontend</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta charset="UTF-8"/>
+  <style>
+.institution {
+  width: 350px;
+    height: 120px;
+      float: left;
+        margin-right: 30px;
+          margin-bottom: 30px;
+            border: 1px solid #e63332;
+              padding: 15px;
+}
+  .institution h3 {
+    font-size: 26px;
+      line-height: 30px;
+  }
+  .institution:hover {
+    background: #eee:
+  }
+  #cato_root h2 {
+    font-size: 64px;
+      line-height: 70px;
+  }
+  .nomination_list {
+    list-style-type: none;
+      margin-left: 0;
+        margin-top: 3em;
+          margin-bottom: 2em;
+            padding: 0;
+ }
+ #submission input, #submission textarea {
+   width: 380px;
+   padding: 12px;
+   border-radius: 5px;
+   border: 1px solid #e63332;
+   margin-bottom: 1em;
+ }
+
+ #submission button {
+   border: 4px solid #e63332;
+   padding: 12px;
+   width: 406px;
+   text-align: center;
+   margin-top: 1em;
+   font-weight: bold;
+  }
+  #submission button:hover {
+    background-color: #e6eedd;
+  }
+  #submission label {
+    font-weight: bold;
+  }
+
+  </style>
+  <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.0/js.cookie.min.js"></script>
+  <script src="/old_frontend.js"></script>
+</head>
+
+<body>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/nb_NO/sdk.js#xfbml=1&version=v2.5&appId=491796074316613";
+          fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+  <div id="cato_root" data-host="http://localhost:3000"></div>
+</body>
+</html>

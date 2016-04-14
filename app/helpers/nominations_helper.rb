@@ -22,4 +22,11 @@ module NominationsHelper
     link_to name, nominations_path(sort: "#{key} #{dir}"), class: "sortable #{current_sortdir}"
   end
 
+  def merge_reasons(nomination)
+    nomination.reasons.map do |r|
+      simple_format(r.reason, {}, wrapper_tag: 'blockquote') +
+        content_tag(:p, "– #{r.nominator}", class: 'nominator')
+    end.join.html_safe
+  end
+
 end
