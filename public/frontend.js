@@ -38,8 +38,9 @@ jQuery(function($) {
   var init = function() {
     root_div = $("#cato_root");
     filter_div = $("<div class='filter'/>");
+    filter_div.append("Velg et lærested:<br/>");
     filter_div.append(filter_select());
-    filter_div.append(" eller søk på navn: ");
+    filter_div.append("<br/><br/>Søk på navn:<br/>");
     filter_div.append(filter_text());
     root_div.before(filter_div);
 
@@ -224,6 +225,8 @@ jQuery(function($) {
   var nomination_li = function(data) {
     var li = $("<li class='nomination'></li>");
     li.append("<h3>" + data.name + "</h3>");
+    li.append("<small>" + data.institution.name + "</small>");
+    li.append(social_icons(data));
     $.each(data.reasons, function(index, element) {
       var div = $("<div class='reason'>");
       div.append("<blockquote>" + element.reason_html + "</blockquote>");
@@ -231,7 +234,6 @@ jQuery(function($) {
       li.append(div);
     });
     li.append(vote_button(data.id));
-    li.append(social_icons(data));
     return(li);
   };
 
