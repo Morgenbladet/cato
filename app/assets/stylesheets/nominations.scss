@@ -31,11 +31,11 @@ div.nomination {
 }
 
 a.sortable.desc::after {
-  content: "⮟";
+  content: "↑";
 }
 
 a.sortable.asc::after {
-  content: "⮝";
+  content: "↓";
 }
 
 li.reason {
