@@ -212,6 +212,7 @@ jQuery(function($) {
       $.post(HOSTNAME + '/nominations/' + id + '/vote.json')
         .done(function(data) {
           $(e.currentTarget).prop('disabled', true);
+          $(e.currentTarget).text('✔ Du har støttet denne!');
           set_voted_for(id);
           alert("Din stemme er mottatt!");
         })
