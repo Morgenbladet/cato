@@ -18,6 +18,10 @@ class NominationsController < ApplicationController
     if params["institution"]
       @nominations = @nominations.where(institution_id: params["institution"])
     end
+
+    if params["search"]
+      @nominations = @nominations.search(params['search'])
+    end
   end
 
   # GET /nominations/random.json

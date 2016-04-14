@@ -15,6 +15,8 @@ class Nomination < ActiveRecord::Base
 
   scope :ten_random, -> { order('RANDOM()').limit(10) }
 
+  scope :search, ->(txt) { where('LOWER(name) LIKE ?', "%#{txt.downcase}%") }
+
   scope :sorted_by, lambda {|sort_key|
     direction = (sort_key =~ /desc$/) ? 'desc' : 'asc'
     case sort_key.to_s
