@@ -34,7 +34,7 @@ class NominationsController < ApplicationController
 
   # GET /nominations/random.json
   def random
-    @nominations = @nominations.accessible_by(current_ability).ten_random
+    @nominations = @nominations.unscoped.ten_random
     respond_to do |format|
       format.json { render :index }
     end
