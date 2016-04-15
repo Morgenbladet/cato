@@ -22,6 +22,14 @@ class NominationsController < ApplicationController
     if params["search"]
       @nominations = @nominations.search(params['search'])
     end
+
+    respond_to do |format|
+      format.json
+      format.html do
+        @nominations = @nominations.page(params[:page])
+        render :index
+      end
+    end
   end
 
   # GET /nominations/random.json

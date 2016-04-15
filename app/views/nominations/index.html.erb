@@ -74,6 +74,13 @@
   </table>
 <% end %>
 
+<div class="digg_pagination">
+  <div class="page_info">
+    <%= page_entries_info @nominations %>
+  </div>
+  <%= will_paginate @nominations, :container => false %>
+</div>
+
 <br>
 
 <%= link_to 'New Nomination', new_nomination_path %>

@@ -71,4 +71,9 @@ class Nomination < ActiveRecord::Base
 
     target.reload.destroy
   end
+
+
+  def self.per_page
+    20
+  end
 end
