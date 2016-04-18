@@ -119,7 +119,7 @@ class NominationsController < ApplicationController
         format.json { render json: "Du har allerede stemt for denne", status: :unprocessable_entity }
         format.html { redirect_to nominations_url, notice: "Du har allerede stemt for denne" }
       else
-        @nomination.increment(:votes)
+        Nomination.increment_counter(:votes, @nomination.id)
         if @nomination.save
           session[:voted_for] << @nomination.id
           format.json { render :show, status: :ok, location: @nomination }
