@@ -67,3 +67,5 @@ gem 'postmark-rails'
 gem 'haml-rails'
 
 gem 'will_paginate', '~> 3.0.6'
+
+gem 'rinku'

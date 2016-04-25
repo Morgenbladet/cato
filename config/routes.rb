@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       patch 'merge'
       get 'full_report'
       get 'random'
+      get 'shortlist'
     end
   end
 

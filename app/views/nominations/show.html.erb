@@ -32,6 +32,22 @@
     <%= @nomination.votes %>
     (#<%= @nomination.rank %> av <%= Nomination.count %>)
   </p>
+
+
+  <p>
+    <strong>Shortlistet?</strong>
+    <%= @nomination.shortlisted? ? "Ja" : "Nei" %>
+  </p>
+
+  <p>
+    <strong>Begrunnelse for shortlisting:</strong><br/>
+    <%= simple_format @nomination.shortlist_reason %>
+  </p>
+
+  <p>
+    <strong>Dokumentasjon og utdyping:</strong><br/>
+    <%= auto_link(simple_format(@nomination.documentation)) %>
+  </p>
 <% end %>
 
 <h2>Nominasjoner</h2>

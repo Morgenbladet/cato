@@ -1,22 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<h1><%= @nominations.count %> nominasjoner</h1>
+<h1><%= @title || "Nominasjoner" %></h1>
 
 <p>
 <% if can? :manage, Nomination %>
-  <%= link_to 'Full report', full_report_nominations_path %>
+  <%= link_to_unless_current 'List alle', nominations_path %> |
+  <%= link_to_unless_current 'Kortliste', shortlist_nominations_path %> |
+  <%= link_to 'Full rapport', full_report_nominations_path %>
 <% end %>
 </p>
 
-<p>
-<% if can? :update, Nomination %>
-  <%= button_to "Verify all",
-        verify_all_nominations_path,
-        method: :post,
-        data: { confirm: "Er du sikker?" }
-  %>
-<% end %>
-</p>
+
+<p><%= @nominations.count %> nominasjoner</p>
 
 <%= form_tag merge_nominations_url, method: :patch, data: { confirm: 'Helt sikker?' } do %>
   <table>
@@ -28,11 +23,6 @@
         <th><%= sorting_link 'Institusjon', 'institution' %></th>
         <th><%= sorting_link 'Navn', 'name' %></th>
         <th><%= sorting_link 'Nominasjoner', 'reasons' %></th>
-        <% if can? :edit, Nomination %>
-          <th>Ubehandlede nom.</th>
-          <th><%= sorting_link 'Stemmer', 'votes', 'desc' %></th>
-        <% end %>
-        <th colspan="6"></th>
       </tr>
     </thead>
 
@@ -47,7 +37,6 @@
             <td><%= link_to nomination.name, nomination %></td>
             <td><%= nomination.reasons.count %></td>
             <% if can? :edit, nomination %>
-              <td><%= nomination.reasons.unverified.count %></td>
               <td><%= nomination.votes %></td>
               <td>
                 <%=
@@ -63,9 +52,8 @@
                 %>
 
                 </td>
-              <td><%= link_to 'Vote', vote_nomination_path(nomination), method: :post %></td>
-              <td><%= link_to 'Edit', edit_nomination_path(nomination) if can? :edit, nomination %></td>
-              <td><%= link_to 'Destroy', nomination, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, nomination %></td>
+              <td><%= link_to 'Rediger', edit_nomination_path(nomination) if can? :edit, nomination %></td>
+              <td><%= link_to 'Slett', nomination, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, nomination %></td>
             </tr>
             <% end %>
         <% end %>
@@ -74,6 +62,17 @@
   </table>
 <% end %>
 
+<p>
+<% if can? :update, Nomination %>
+  <%= button_to "Verify all",
+        verify_all_nominations_path,
+        method: :post,
+        data: { confirm: "Er du sikker?" }
+  %>
+<% end %>
+</p>
+
+<p>&nbsp;</p>
 <div class="digg_pagination">
   <div class="page_info">
     <%= page_entries_info @nominations %>

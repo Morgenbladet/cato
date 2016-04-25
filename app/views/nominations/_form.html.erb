@@ -37,6 +37,22 @@
     <%= f.number_field :year_of_birth %>
   </div>
 
+  <div class="field">
+    <%= f.check_box :shortlisted %>
+    <%= f.label :shortlisted %>
+  </div>
+
+  <div class="field">
+    <%= f.label :shortlist_reason %><br>
+    <%= f.text_area :shortlist_reason, cols: 50, rows: 4 %>
+  </div>
+
+  <div class="field">
+    <%= f.label :documentation %><br>
+    URL-er her blir automatisk gjort til lenker.<br>
+    <%= f.text_area :documentation, cols: 50, rows: 10 %>
+  </div>
+
   <%= f.fields_for :reasons do |ff| %>
     <fieldset>
     <div class="field">

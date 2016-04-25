@@ -32,6 +32,12 @@ class NominationsController < ApplicationController
     end
   end
 
+  def shortlist
+    @nominations = @nominations.where(shortlisted: true).page(params[:page])
+    @title = "Shortlist"
+    render :index
+  end
+
   # GET /nominations/random.json
   def random
     @nominations = @nominations.unscoped.ten_random
@@ -153,6 +159,7 @@ class NominationsController < ApplicationController
     def nomination_params
       params.require(:nomination)
         .permit(:institution_id, :name, :gender, :branch, :year_of_birth,
+                :shortlisted, :shortlist_reason, :documentation,
                 reasons_attributes:
                   %i|id _destroy reason nominator nominator_email verified| )
     end

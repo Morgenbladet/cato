@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160414113121) do
+ActiveRecord::Schema.define(version: 20160425113953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,13 +28,16 @@ ActiveRecord::Schema.define(version: 20160414113121) do
   create_table "nominations", force: :cascade do |t|
     t.integer  "institution_id"
     t.string   "name"
-    t.integer  "votes",          default: 0
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.integer  "votes",            default: 0
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.string   "gender"
     t.integer  "year_of_birth"
     t.string   "branch"
-    t.integer  "reasons_count",  default: 0
+    t.integer  "reasons_count",    default: 0
+    t.boolean  "shortlisted",      default: false
+    t.text     "shortlist_reason"
+    t.text     "documentation"
   end
 
   add_index "nominations", ["institution_id"], name: "index_nominations_on_institution_id", using: :btree
