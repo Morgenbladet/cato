@@ -19,7 +19,7 @@ module NominationsHelper
       dir = default_dir
     end
 
-    link_to name, nominations_path(sort: "#{key} #{dir}"), class: "sortable #{current_sortdir}"
+    link_to name, params.merge({sort: "#{key} #{dir}"}), class: "sortable #{current_sortdir}"
   end
 
   def merge_reasons(nomination)
