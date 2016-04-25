@@ -33,6 +33,14 @@ class NominationsController < ApplicationController
   end
 
   def shortlist
+    if params["sort"]
+      @sort_params = params["sort"]
+      @nominations = @nominations.sorted_by(params["sort"])
+    else
+      @sort_params = "name asc"
+      @nominations = @nominations.order(name: 'asc')
+    end
+
     @nominations = @nominations.where(shortlisted: true).page(params[:page])
     @title = "Shortlist"
     render :index
