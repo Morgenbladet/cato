@@ -1,13 +1,9 @@
-<p id="notice"><%= notice %></p>
-
 <h1><%= @title || "Nominasjoner" %></h1>
 
 <p>
-<% if can? :manage, Nomination %>
   <%= link_to_unless_current 'List alle', nominations_path %> |
   <%= link_to_unless_current 'Kortliste', shortlist_nominations_path %> |
   <%= link_to 'Full rapport', full_report_nominations_path %>
-<% end %>
 </p>
 
 
@@ -18,11 +14,14 @@
     <thead>
       <tr>
         <th>
-          <%= submit_tag 'Smelt' %>
+          <% if can? :edit, Nomination %> 
+            <%= submit_tag 'Smelt' %>
+          <% end %>
         </th>
         <th><%= sorting_link 'Institusjon', 'institution' %></th>
         <th><%= sorting_link 'Navn', 'name' %></th>
         <th><%= sorting_link 'Nominasjoner', 'reasons' %></th>
+        <th><%= sorting_link 'Stemmer', 'votes' %></th>
       </tr>
     </thead>
 
@@ -31,36 +30,37 @@
         <% if can? :read, nomination %>
           <tr class='<%= cycle %w(odd even)%>'>
             <td>
-              <%= check_box_tag 'ids[]', nomination.id %>
+              <% if can? :edit, nomination %>
+                <%= check_box_tag 'ids[]', nomination.id %>
+              <% end %>
             </td>
             <td><%= nomination.institution.abbreviation %></td>
             <td><%= link_to nomination.name, nomination %></td>
             <td><%= nomination.reasons.count %></td>
+            <td><%= nomination.votes %></td>
+            <td><%= personalia(nomination) %></td>
             <% if can? :edit, nomination %>
-              <td><%= nomination.votes %></td>
-              <td>
-                <%=
-                  [
-                  case(nomination.gender)
-                  when "Male" then "♂"
-                  when "Female" then "♀"
-                  else nil
-                  end,
-                  nomination.age ? "#{nomination.age} yrs." : nil,
-                  nomination.branch.blank? ? nil : nomination.branch
-                  ].compact.join(", ")
-                %>
-
-                </td>
               <td><%= link_to 'Rediger', edit_nomination_path(nomination) if can? :edit, nomination %></td>
-              <td><%= link_to 'Slett', nomination, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, nomination %></td>
-            </tr>
             <% end %>
+            <% if can? :destroy, nomination %>
+              <td><%= link_to 'Slett', nomination, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, nomination %></td>
+            <% end %>
+          </tr>
         <% end %>
       <% end %>
     </tbody>
   </table>
 <% end %>
+
+
+<p>&nbsp;</p>
+<div class="digg_pagination">
+  <div class="page_info">
+    <%= page_entries_info @nominations %>
+  </div>
+  <%= will_paginate @nominations, :container => false %>
+</div>
+
 
 <p>
 <% if can? :update, Nomination %>
@@ -72,14 +72,6 @@
 <% end %>
 </p>
 
-<p>&nbsp;</p>
-<div class="digg_pagination">
-  <div class="page_info">
-    <%= page_entries_info @nominations %>
-  </div>
-  <%= will_paginate @nominations, :container => false %>
-</div>
-
-<br>
-
-<%= link_to 'New Nomination', new_nomination_path %>
+<% if can? :create, Nomination %>
+  <%= link_to 'Ny nominasjon', new_nomination_path %>
+<% end %>

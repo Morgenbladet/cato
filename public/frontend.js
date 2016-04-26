@@ -35,7 +35,7 @@ jQuery(function($) {
 
   var init = function() {
     root_div = $("#cato_root");
-    HOSTNAME = root_div.data('host') || 'https://cato.herokuapp.com';
+    HOSTNAME = root_div.data('host') || 'https://cato.herokuapp.com/api';
     filter_div = $("<div class='filter'/>");
     filter_div.append("Velg et lærested:<br/>");
     filter_div.append(filter_select());

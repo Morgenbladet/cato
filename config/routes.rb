@@ -1,19 +1,31 @@
 Rails.application.routes.draw do
+  namespace :api do
+    resources :nominations, only: [:index, :show], defaults: { format: :json } do
+      collection do
+        get 'random'
+      end
+      member do
+        post 'vote'
+      end
+    end
+  end
+
+
   devise_for :users
   resources :nominations do
-    member do
-      post 'vote'
-    end
     collection do
       post 'verify_all'
       patch 'merge'
       get 'full_report'
-      get 'random'
       get 'shortlist'
     end
   end
 
   resources :institutions
+
+  scope '/api' do
+    resources :institutions, only: [:index, :show], defaults: { format: :json }
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

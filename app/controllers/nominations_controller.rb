@@ -1,7 +1,7 @@
 class NominationsController < ApplicationController
   before_action :set_nomination, only: [:show, :edit, :update, :destroy]
   load_and_authorize_resource # also loads @nomination[s]
-  protect_from_forgery except: [:create, :vote]
+  protect_from_forgery
 
   # GET /nominations
   # GET /nominations.json
@@ -44,14 +44,6 @@ class NominationsController < ApplicationController
     @nominations = @nominations.where(shortlisted: true).page(params[:page])
     @title = "Shortlist"
     render :index
-  end
-
-  # GET /nominations/random.json
-  def random
-    @nominations = @nominations.unscoped.ten_random
-    respond_to do |format|
-      format.json { render :index }
-    end
   end
 
   # GET /nominations/full_report
@@ -124,28 +116,6 @@ class NominationsController < ApplicationController
   rescue
     redirect_to nominations_url, notice: 'Error occured.'
   end
-
-  # POST /nominations/1/vote.json
-  def vote
-    session[:voted_for] ||= []
-    respond_to do |format|
-      if session[:voted_for].include?(@nomination.id)
-        format.json { render json: "Du har allerede stemt for denne", status: :unprocessable_entity }
-        format.html { redirect_to nominations_url, notice: "Du har allerede stemt for denne" }
-      else
-        Nomination.increment_counter(:votes, @nomination.id)
-        if @nomination.save
-          session[:voted_for] << @nomination.id
-          format.json { render :show, status: :ok, location: @nomination }
-          format.html { redirect_to nominations_url, notice: "Stemmen er lagret" }
-        else
-          format.json { render json: "Kunne ikke lagre stemmen", status: :unprocessable_entity }
-          format.html { redirect_to nominations_url, notice: "Kunne ikke lagre stemmen" }
-        end
-      end
-    end
-  end
-
 
   # DELETE /nominations/1
   # DELETE /nominations/1.json
