@@ -69,3 +69,8 @@ gem 'haml-rails'
 gem 'will_paginate', '~> 3.0.6'
 
 gem 'rinku'
+
+gem 'paperclip', '>= 5.0.0.beta2'
+gem 'aws-sdk'
+
+gem 'dotenv-rails', groups: [:development, :test]

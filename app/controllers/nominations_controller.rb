@@ -63,6 +63,7 @@ class NominationsController < ApplicationController
 
   # GET /nominations/1/edit
   def edit
+    @nomination.attachments.build
   end
 
   # POST /nominations
@@ -100,7 +101,7 @@ class NominationsController < ApplicationController
   def update
     respond_to do |format|
       if @nomination.update(nomination_params)
-        format.html { redirect_to nominations_url, notice: 'Nomination was successfully updated.' }
+        format.html { redirect_to @nomination, notice: 'Nomination was successfully updated.' }
         format.json { render :show, status: :ok, location: @nomination }
       else
         format.html { render :edit }
@@ -135,10 +136,11 @@ class NominationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def nomination_params
-      params.require(:nomination)
-        .permit(:institution_id, :name, :gender, :branch, :year_of_birth,
-                :shortlisted, :shortlist_reason, :documentation,
-                reasons_attributes:
-                  %i|id _destroy reason nominator nominator_email verified| )
+      params.require(:nomination).
+        permit(:institution_id, :name, :gender, :branch, :year_of_birth,
+               :shortlisted, :shortlist_reason, :documentation,
+               reasons_attributes:
+                 %i|id _destroy reason nominator nominator_email verified|,
+               attachments_attributes: %i|id _destroy file|)
     end
 end

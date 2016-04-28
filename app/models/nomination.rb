@@ -1,8 +1,11 @@
 class Nomination < ActiveRecord::Base
   belongs_to :institution, counter_cache: true
   has_many :reasons, inverse_of: :nomination, dependent: :destroy
+  has_many :attachments, inverse_of: :nomination, dependent: :destroy
 
-  accepts_nested_attributes_for :reasons
+  accepts_nested_attributes_for :reasons, :attachments,
+    allow_destroy: true,
+    reject_if: :all_blank
 
   validates :institution, presence: true
   validates :name, presence: true

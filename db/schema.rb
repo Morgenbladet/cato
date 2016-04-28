@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160426113742) do
+ActiveRecord::Schema.define(version: 20160428131148) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attachments", force: :cascade do |t|
+    t.integer  "nomination_id"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "attachments", ["nomination_id"], name: "index_attachments_on_nomination_id", using: :btree
 
   create_table "institutions", force: :cascade do |t|
     t.string   "name"
@@ -73,6 +85,7 @@ ActiveRecord::Schema.define(version: 20160426113742) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "attachments", "nominations"
   add_foreign_key "nominations", "institutions"
   add_foreign_key "reasons", "nominations"
 end

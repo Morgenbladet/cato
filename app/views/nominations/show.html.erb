@@ -48,6 +48,17 @@
   <%= auto_link(simple_format(@nomination.documentation)) %>
 </p>
 
+<p>
+  <strong>Vedlegg:</strong>
+  <% if @nomination.attachments.any? %>
+    <ul>
+      <% @nomination.attachments.each do |att| %>
+        <li><%= link_to att.file_file_name, att.file.url %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</p>
+
 <h2>Nominasjoner</h2>
 
 <ol>

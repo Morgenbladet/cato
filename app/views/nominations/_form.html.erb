@@ -1,4 +1,4 @@
-<%= form_for(@nomination) do |f| %>
+<%= form_for(@nomination, html: { multipart: true }) do |f| %>
   <% if @nomination.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@nomination.errors.count, "error") %> prohibited this nomination from being saved:</h2>
@@ -52,6 +52,27 @@
     URL-er her blir automatisk gjort til lenker.<br>
     <%= f.text_area :documentation, cols: 50, rows: 10 %>
   </div>
+
+  <div class="field">
+    <%= f.label :attachments %><br>
+    <ul>
+      <%= f.fields_for :attachments do |a| %>
+        <li>
+        <% if a.object.persisted? %>
+          <%= a.check_box :_destroy %> [Slett]
+          <%= link_to a.object.file.url do %>
+            <%= a.object.file_file_name %>
+          <% end %>
+        <% else %>
+          Ny fil
+        <% end %>
+        <%= a.file_field :file %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+  <h3>Nominasjonstekster</h3>
 
   <%= f.fields_for :reasons do |ff| %>
     <fieldset>
