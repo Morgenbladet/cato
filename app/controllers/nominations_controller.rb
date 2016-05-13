@@ -46,6 +46,11 @@ class NominationsController < ApplicationController
     render :index
   end
 
+  def shortlist_report
+    @nominations.where(shortlisted: true).order(name: 'asc')
+    @title = "Kortlisterapport"
+  end
+
   # GET /nominations/full_report
   def full_report
     @nominations = @nominations.verified.order(:name)

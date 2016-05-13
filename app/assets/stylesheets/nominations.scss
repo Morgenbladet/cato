@@ -46,3 +46,33 @@ li.reason {
 li.reason.unverified {
   background: #ffeeee;
 }
+
+article.nomination {
+  page-break-after: always;
+  clear: both;
+  @media screen {
+    margin-bottom: 4em;
+  }
+
+  h2 {
+    border-bottom: 1px solid black;
+  }
+
+  dt {
+    float: left;
+    font-weight: bold;
+    width: 15em;
+  }
+  dd {
+    display: inline;
+    margin: 0;
+  }
+  dd:after {
+    display: block;
+    content: '';
+  }
+  dt {
+    display: inline-block;
+    min-width: 15em;
+  }
+}

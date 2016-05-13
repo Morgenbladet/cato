@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       patch 'merge'
       get 'full_report'
       get 'shortlist'
+      get 'shortlist_report'
     end
   end
 

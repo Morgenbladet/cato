@@ -1,0 +1,39 @@
+%p
+%article.nomination
+  %h2= nomination.name
+
+  %dl
+    %dt Institusjon
+    %dd= nomination.institution.name
+
+    %dt Stemmer
+    %dd== #{nomination.votes} (##{nomination.rank} av #{Nomination.count})
+
+    %dt Personalia
+    %dd
+      = personalia(nomination)
+      &nbsp;
+
+    %dt Nominasjonstekster
+    %dd
+      %br
+      %ol= render partial: 'report_reason', collection: nomination.reasons
+
+    %dt Begrunnelse for kortlisting
+    %dd
+      %br
+      = simple_format(nomination.shortlist_reason)
+      &nbsp;
+
+    %dt Dokumentasjon
+    %dd
+      %br
+      = simple_format(auto_link(nomination.documentation || ''))
+      &nbsp;
+
+    %dt Vedlegg
+    %dd
+      %br
+      %ul
+        - nomination.attachments.each do |att|
+          %li= link_to att.file_file_name, att.file.url
