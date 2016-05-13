@@ -7,6 +7,7 @@ class Ability
     alias_action :merge, to: :update
     alias_action :full_report, to: :read
     alias_action :shortlist, to: :read
+    alias_action :shortlist_report, to: :read
 
     can :read, Institution
 
