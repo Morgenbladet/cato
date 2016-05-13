@@ -47,7 +47,7 @@ class NominationsController < ApplicationController
   end
 
   def shortlist_report
-    @nominations.where(shortlisted: true).order(name: 'asc')
+    @nominations = @nominations.where(shortlisted: true).order(name: 'asc')
     @title = "Kortlisterapport"
   end
 
