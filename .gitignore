@@ -15,3 +15,5 @@
 spec/examples.txt
 .byebug_history
 .env
+
+db/*.sqlite3

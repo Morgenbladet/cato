@@ -13,9 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160428131148) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "attachments", force: :cascade do |t|
     t.integer  "nomination_id"
     t.string   "file_file_name"
@@ -26,7 +23,7 @@ ActiveRecord::Schema.define(version: 20160428131148) do
     t.datetime "updated_at",        null: false
   end
 
-  add_index "attachments", ["nomination_id"], name: "index_attachments_on_nomination_id", using: :btree
+  add_index "attachments", ["nomination_id"], name: "index_attachments_on_nomination_id"
 
   create_table "institutions", force: :cascade do |t|
     t.string   "name"
@@ -52,7 +49,7 @@ ActiveRecord::Schema.define(version: 20160428131148) do
     t.text     "documentation"
   end
 
-  add_index "nominations", ["institution_id"], name: "index_nominations_on_institution_id", using: :btree
+  add_index "nominations", ["institution_id"], name: "index_nominations_on_institution_id"
 
   create_table "reasons", force: :cascade do |t|
     t.integer  "nomination_id"
@@ -64,7 +61,7 @@ ActiveRecord::Schema.define(version: 20160428131148) do
     t.datetime "updated_at",                      null: false
   end
 
-  add_index "reasons", ["nomination_id"], name: "index_reasons_on_nomination_id", using: :btree
+  add_index "reasons", ["nomination_id"], name: "index_reasons_on_nomination_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -75,17 +72,14 @@ ActiveRecord::Schema.define(version: 20160428131148) do
     t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet     "current_sign_in_ip"
-    t.inet     "last_sign_in_ip"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
     t.boolean  "admin",                  default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  add_foreign_key "attachments", "nominations"
-  add_foreign_key "nominations", "institutions"
-  add_foreign_key "reasons", "nominations"
 end
